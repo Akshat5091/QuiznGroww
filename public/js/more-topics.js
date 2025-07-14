@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const topicsGridDiv = document.getElementById('more-topics-grid');
     const difficultyModal = document.getElementById('difficulty-modal');
     const difficultyCloseBtn = document.getElementById('difficulty-close-btn');
-    // ADDED: Get the new login modal elements
     const loginModal = document.getElementById('login-modal');
     const modalLoginBtn = document.getElementById('modal-login-btn');
     const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -23,12 +22,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const showDifficultyModal = () => difficultyModal.classList.remove('hidden');
     const hideDifficultyModal = () => difficultyModal.classList.add('hidden');
-    // ADDED: Functions to show and hide the login modal
     const showLoginModal = () => loginModal.classList.remove('hidden');
     const hideLoginModal = () => loginModal.classList.add('hidden');
 
     // --- RENDER FUNCTION ---
     const renderNewTopics = () => {
+        // UPDATED: Show the skeleton loader first
+        const skeletonHTML = `
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+        `;
+        topicsGridDiv.innerHTML = skeletonHTML;
+
+        // Since the topics are local, we can render them immediately after.
+        // In a real-world scenario with a fetch call, this would happen in a .then() or after await.
         const newTopics = ["History", "Geography", "Literature", "Art", "Mythology", "Movies"];
         
         const topicsHTML = newTopics.map(topic => `
@@ -38,7 +49,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>
         `).join('');
 
-        topicsGridDiv.innerHTML = topicsHTML;
+        // A tiny delay can make the transition feel smoother, but is optional.
+        setTimeout(() => {
+            topicsGridDiv.innerHTML = topicsHTML;
+        }, 250); // 250ms delay
     };
 
     // --- MAIN EXECUTION & EVENT HANDLING ---
@@ -48,39 +62,28 @@ document.addEventListener("DOMContentLoaded", async () => {
         
         renderNewTopics();
 
-        // Main event listener for the whole page body
         document.body.addEventListener('click', (event) => {
             const target = event.target;
             const topicItem = target.closest('.more-topic-item');
 
-            // If a topic item is clicked
             if (topicItem) {
                 selectedTopic = topicItem.dataset.topic;
-                // UPDATED: Check if user is logged in
                 if (clerk.user) {
-                    // If logged in, show difficulty modal
                     showDifficultyModal();
                 } else {
-                    // If not logged in, show the login modal instead of direct sign-in
                     showLoginModal();
                 }
             }
 
-            // If a difficulty button is clicked
             if (target.classList.contains('difficulty-btn')) {
                 const difficulty = target.dataset.difficulty;
                 window.location.href = `/quiz.html?topic=${selectedTopic}&difficulty=${difficulty}`;
             }
             
-            // ADDED: Listeners for the new login modal buttons
             if (target.id === 'modal-login-btn') clerk.openSignIn();
             if (target.id === 'modal-close-btn') hideLoginModal();
             if (target.id === 'modal-learn-more-btn') window.location.href = '/feedback.html';
-
-            // Difficulty modal close button
-            if (target.id === 'difficulty-close-btn') {
-                hideDifficultyModal();
-            }
+            if (target.id === 'difficulty-close-btn') hideDifficultyModal();
         });
 
     } catch (err) {

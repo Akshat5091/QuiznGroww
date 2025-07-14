@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const modalLearnMoreBtn = document.getElementById('modal-learn-more-btn');
     const difficultyCloseBtn = document.getElementById('difficulty-close-btn');
-    const discoverButton = document.querySelector('.discover-button'); // Get the discover button
+    const discoverButton = document.querySelector('.discover-button');
 
     // --- GLOBAL STATE ---
     let clerk = null;
@@ -28,12 +28,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // --- DATA FETCHING ---
     const fetchAndRenderTopics = async () => {
+        // UPDATED: Show the skeleton loader before fetching data
+        const skeletonHTML = `
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+        `;
+        topicsListDiv.innerHTML = skeletonHTML;
+
         try {
             const response = await fetch('/api/questions/topics');
             if (!response.ok) throw new Error('Failed to fetch topics');
             const topics = await response.json();
             
-            // Filter out the new topics from the main list
             const mainTopics = topics.filter(t => !["History", "Geography", "Literature", "Art", "Mythology", "Movies"].includes(t));
 
             const topicsHTML = mainTopics.map(topic => `
@@ -67,12 +76,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         
         fetchAndRenderTopics();
 
-        // Main event listener for the whole page body
         document.body.addEventListener('click', (event) => {
             const target = event.target;
             const topicItem = target.closest('.topic-item');
 
-            // If a topic item is clicked
             if (topicItem) {
                 selectedTopic = topicItem.dataset.topic;
                 if (clerk.user) {
@@ -82,20 +89,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             }
 
-            // If a difficulty button is clicked
             if (target.classList.contains('difficulty-btn')) {
                 const difficulty = target.dataset.difficulty;
                 window.location.href = `/quiz.html?topic=${selectedTopic}&difficulty=${difficulty}`;
             }
             
-            // Modal button listeners
             if (target.id === 'modal-login-btn') clerk.openSignIn();
             if (target.id === 'modal-close-btn') hideLoginModal();
             if (target.id === 'modal-learn-more-btn') window.location.href = '/feedback.html';
             if (target.id === 'difficulty-close-btn') hideDifficultyModal();
         });
 
-        // UPDATED: Add event listener for the discover button
         if (discoverButton) {
             discoverButton.addEventListener('click', () => {
                 window.location.href = '/more-topics.html';
