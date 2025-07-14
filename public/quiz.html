@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz in Progress - QuiznGroww</title>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- Clerk Configuration -->
+  <script>
+    window.__clerk_frontend_api = "known-ladybird-10.clerk.accounts.dev";
+  </script>
+  <script
+    async
+    crossorigin="anonymous"
+    data-clerk-publishable-key="pk_test_a25vd24tbGFkeWJpcmQtMTAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+    src="https://known-ladybird-10.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
+    type="text/javascript">
+  </script>
+</head>
+
+<body>
+  <!-- Back button to return to topics page -->
+  <a href="/topics.html" class="back-link">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+  </a>
+
+  <div id="quiz-app-container">
+    <!-- JavaScript will render the quiz here -->
+    <p>Loading Quiz...</p>
+  </div>
+
+  <script src="/js/quiz.js"></script>
+</body>
+</html>

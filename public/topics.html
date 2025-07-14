@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Topics - QuiznGroww</title>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <script>
+    window.__clerk_frontend_api = "known-ladybird-10.clerk.accounts.dev";
+  </script>
+  <script
+    async
+    crossorigin="anonymous"
+    data-clerk-publishable-key="pk_test_a25vd24tbGFkeWJpcmQtMTAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+    src="https://known-ladybird-10.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
+    type="text/javascript">
+  </script>
+</head>
+
+<body>
+  <a href="/" class="back-link">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+  </a>
+
+  <a href="/feedback.html" class="next-link">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+  </a>
+
+  <div class="topics-page-container">
+    <aside class="topics-sidebar">
+      <h1>Explore a Wide Range of Subjects</h1>
+      <div class="sidebar-description">
+        <p>Explore a wide array of subjects with QuiznGroww. Whether you are into science, history, or the arts, we have quizzes that match your interests and help you discover new topics to expand your knowledge.</p>
+      </div>
+      <button class="discover-button">Discover more subjects</button>
+    </aside>
+
+    <main class="topics-list-container">
+      <div class="trending-box">Trending Subjects</div>
+      <div id="topics-list">
+        <p>Loading Topics...</p>
+      </div>
+    </main>
+  </div>
+
+  <div id="login-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h2>Login Required</h2>
+      <p>You need to be logged in to start a quiz.</p>
+      <div class="modal-buttons">
+        <button id="modal-login-btn">Login</button>
+        <button id="modal-learn-more-btn">Learn More</button>
+        <button id="modal-close-btn">Not Now</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="difficulty-modal" class="modal-overlay hidden">
+      <div class="modal-content">
+          <h2>Select Difficulty</h2>
+          <p>Choose a level to begin the quiz.</p>
+          <div class="modal-buttons difficulty-buttons">
+              <button class="difficulty-btn easy" data-difficulty="Easy">Easy</button>
+              <button class="difficulty-btn medium" data-difficulty="Medium">Medium</button>
+              <button class="difficulty-btn hard" data-difficulty="Hard">Hard</button>
+          </div>
+          <button id="difficulty-close-btn" class="modal-cancel-btn">Cancel</button>
+      </div>
+  </div>
+
+  <script src="/js/topics.js"></script>
+</body>
+</html>

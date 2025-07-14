@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuiznGroww - Welcome</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+  <script>
+    window.__clerk_frontend_api = "known-ladybird-10.clerk.accounts.dev";
+  </script>
+  <script
+    async
+    crossorigin="anonymous"
+    data-clerk-publishable-key="pk_test_a25vd24tbGFkeWJpcmQtMTAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+    src="https://known-ladybird-10.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
+    type="text/javascript">
+  </script>
+</head>
+
+<body>
+  <div class="landing-container">
+    <header class="main-header">
+      <div id="user-greeting-container" class="nav-left">
+        <!-- JavaScript will add the greeting message and dropdown here -->
+      </div> 
+      <div class="logo">QuiznGroww</div>
+      <nav id="main-nav">
+        <!-- JavaScript will add navigation buttons here -->
+      </nav>
+    </header>
+
+    <main class="hero-section">
+      <div class="hero-content">
+        <h1>Test Learn Grow</h1>
+        <p>Engage in dynamic quizzes, get instant feedback, and track your progress as you expand your knowledge. Join QuiznGroww and start learning smarter today!</p>
+        <a href="/topics.html" id="start-quiz-link" class="cta-button">Start a Quiz Now</a>
+      </div>
+    </main>
+
+    <!-- The footer section has been removed from this page -->
+  </div>
+
+  <div id="performance-modal" class="modal-overlay hidden">
+    <div class="modal-content performance-modal-content">
+        <button id="performance-close-btn" class="modal-close-icon">&times;</button>
+        <h2>Past Performance</h2>
+        <div id="performance-history-list" class="performance-history-list">
+            <p>Loading history...</p>
+        </div>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
