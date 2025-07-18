@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <span class="score-box incorrect">${incorrectAnswers}</span>
             </p>
         </div>
-        <a href="/topics.html" class="play-again-button">Play Again</a>
+        <a href="/html/topics.html" class="play-again-button">Play Again</a>
       </div>
     `;
   };
@@ -183,7 +183,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       await clerk.load();
 
       if (!clerk.user) {
-        window.location.href = '/topics.html';
+        // 👇 Path updated here
+        window.location.href = '/html/topics.html';
         return;
       }
 

@@ -64,9 +64,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                     </div>
                 </div>
             `;
+            // 👇 Paths updated here
             mainNav.innerHTML = `
-                <a href="/contact.html" class="nav-item">Contact</a>
-                <a href="/about.html" class="nav-item">About</a>
+                <a href="/html/contact.html" class="nav-item">Contact</a>
+                <a href="/html/about.html" class="nav-item">About</a>
                 <button id="logout-button" class="nav-item">Sign Out</button>
             `;
             document.getElementById('logout-button').addEventListener('click', () => {
@@ -90,14 +91,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
 
         } else {
+            // 👇 Paths updated here
             mainNav.innerHTML = `
-                <a href="/contact.html" class="nav-item">Contact</a>
-                <a href="/about.html" class="nav-item">About</a>
+                <a href="/html/contact.html" class="nav-item">Contact</a>
+                <a href="/html/about.html" class="nav-item">About</a>
                 <button id="login-button" class="nav-item">Login</button>
             `;
             document.getElementById('login-button').addEventListener('click', () => {
                 clerk.openSignIn({
-                    redirectUrl: '/topics.html'
+                    // 👇 Path updated here
+                    redirectUrl: '/html/topics.html'
                 });
             });
         }

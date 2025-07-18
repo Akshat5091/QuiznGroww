@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body class="signup-page-body">
-    <!-- The notification popup HTML needs to be on the page -->
     <div id="notification-popup" class="notification-popup hidden">
         <div class="notification-content">
             <h2>Hurray! You're Subscribed!</h2>
@@ -18,8 +17,8 @@
         </div>
     </div>
 
-    <a href="/feedback.html" class="back-link">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    <a href="/html/feedback.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
     </a>
     <div class="signup-page-container">
         <div class="signup-image-content">
@@ -28,7 +27,7 @@
         <div class="signup-text-content">
             <h1>Start Quizzing and Boost Your Knowledge Instantly!</h1>
             <p>Ready to challenge yourself? Click below to head to the topics page and start your learning journey.</p>
-            <a href="/topics.html" class="get-started-btn">Let's Go!</a>
+            <a href="/html/topics.html" class="get-started-btn">Let's Go!</a>
         </div>
     </div>
     <footer class="main-footer-section">
@@ -39,12 +38,11 @@
             </div>
             <nav class="footer-nav">
                 <a href="/">Home</a>
-                <a href="/about.html">About</a>
-                <a href="/contact.html">Contact Us</a>
+                <a href="/html/about.html">About</a>
+                <a href="/html/contact.html">Contact Us</a>
                 <a href="#">Terms & Conditions</a>
             </nav>
             <div class="footer-right">
-                <!-- UPDATED: Changed div to a form and added IDs -->
                 <form id="subscribe-form" class="subscribe-box">
                     <p>Subscribe for updates on new quizzes and features!</p>
                     <input type="email" id="subscribe-email" placeholder="Email Address..." required>

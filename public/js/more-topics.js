@@ -77,12 +77,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (target.classList.contains('difficulty-btn')) {
                 const difficulty = target.dataset.difficulty;
-                window.location.href = `/quiz.html?topic=${selectedTopic}&difficulty=${difficulty}`;
+                // 👇 Path updated here
+                window.location.href = `/html/quiz.html?topic=${selectedTopic}&difficulty=${difficulty}`;
             }
             
             if (target.id === 'modal-login-btn') clerk.openSignIn();
             if (target.id === 'modal-close-btn') hideLoginModal();
-            if (target.id === 'modal-learn-more-btn') window.location.href = '/feedback.html';
+            // 👇 Path updated here
+            if (target.id === 'modal-learn-more-btn') window.location.href = '/html/feedback.html';
             if (target.id === 'difficulty-close-btn') hideDifficultyModal();
         });
 
