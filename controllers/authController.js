@@ -55,7 +55,8 @@ const googleAuth = async (req, res) => {
     if (!email) {
       if (demoUser || !process.env.GOOGLE_CLIENT_ID) {
         googleId = `google_demo_${Date.now()}`;
-        email = demoUser?.email || `scholar.${Math.random().toString(36).substring(2, 6)}@gmail.com`;
+        email =
+          demoUser?.email || `scholar.${Math.random().toString(36).substring(2, 6)}@gmail.com`;
         name = demoUser?.name || 'Google Scholar';
         avatar = demoUser?.avatar || 'https://lh3.googleusercontent.com/a/default-user';
       } else {

@@ -34,19 +34,19 @@ app.use(
         scriptSrc: [
           "'self'",
           "'unsafe-inline'",
-          "https://cdn.jsdelivr.net",
-          "https://accounts.google.com/gsi/client",
+          'https://cdn.jsdelivr.net',
+          'https://accounts.google.com/gsi/client',
         ],
-        frameSrc: ["'self'", "https://accounts.google.com/gsi/"],
-        connectSrc: ["'self'", "https://accounts.google.com/gsi/"],
+        frameSrc: ["'self'", 'https://accounts.google.com/gsi/'],
+        connectSrc: ["'self'", 'https://accounts.google.com/gsi/'],
         styleSrc: [
           "'self'",
           "'unsafe-inline'",
-          "https://fonts.googleapis.com",
-          "https://accounts.google.com/gsi/style",
+          'https://fonts.googleapis.com',
+          'https://accounts.google.com/gsi/style',
         ],
-        fontSrc: ["'self'", "https://fonts.gstatic.com"],
-        imgSrc: ["'self'", "data:", "https:", "https://*.googleusercontent.com"],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        imgSrc: ["'self'", 'data:', 'https:', 'https://*.googleusercontent.com'],
       },
     },
     crossOriginEmbedderPolicy: false,
@@ -149,7 +149,7 @@ app.use((req, res) => {
 });
 
 // Global error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   console.error('Unhandled Server Error:', err);
   res.status(500).json({
     success: false,
@@ -158,9 +158,13 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`🚀 QuiznGroww Server live at http://localhost:${PORT}`);
-  console.log(`⚡ Performance engine: Gzip/Brotli compression active`);
-  console.log(`🛡️ Security: Native JWT Auth + Helmet protection enabled`);
-});
+// Start the server if executed directly
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 QuiznGroww Server live at http://localhost:${PORT}`);
+    console.log(`⚡ Performance engine: Gzip/Brotli compression active`);
+    console.log(`🛡️ Security: Native JWT Auth + Helmet protection enabled`);
+  });
+}
+
+module.exports = app;

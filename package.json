@@ -6,7 +6,11 @@
   "scripts": {
     "start": "node server.js",
     "seed": "node utils/seeder.js -i",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "test": "node --test --test-concurrency=1 tests/**/*.test.js",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "quiz",
@@ -18,6 +22,7 @@
   "author": "Akshat Nagori",
   "license": "ISC",
   "dependencies": {
+    "@google/genai": "^2.31.0",
     "@libsql/client": "^0.18.0",
     "bcryptjs": "^3.0.3",
     "compression": "^1.8.1",
@@ -28,5 +33,11 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
     "nodemailer": "^7.0.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "prettier": "^3.9.10",
+    "supertest": "^7.3.1"
   }
 }

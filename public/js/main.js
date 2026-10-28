@@ -449,6 +449,95 @@ window.initHomePage = function initHomePage() {
     };
   }
 
+  // AI Quiz Generator Modal Wiring
+  const aiQuizModal = document.getElementById('ai-quiz-modal');
+  const aiQuizOpenBtn = document.getElementById('ai-quiz-open-btn');
+  const aiQuizCloseBtn = document.getElementById('ai-quiz-close-btn');
+  const aiQuizForm = document.getElementById('ai-quiz-form');
+  const aiTopicInput = document.getElementById('ai-topic-input');
+  const aiStatusMsg = document.getElementById('ai-quiz-status-msg');
+  const aiSubmitBtn = document.getElementById('ai-generate-submit-btn');
+
+  if (aiQuizOpenBtn && aiQuizModal) {
+    aiQuizOpenBtn.onclick = () => {
+      if (window.QuiznGrowwSound) window.QuiznGrowwSound.click();
+      aiQuizModal.classList.remove('hidden');
+      if (aiTopicInput) aiTopicInput.focus();
+    };
+
+    if (aiQuizCloseBtn) {
+      aiQuizCloseBtn.onclick = () => {
+        aiQuizModal.classList.add('hidden');
+      };
+    }
+
+    aiQuizModal.onclick = (e) => {
+      if (e.target === aiQuizModal) aiQuizModal.classList.add('hidden');
+    };
+
+    // Quick suggestion chips
+    document.querySelectorAll('.ai-chip').forEach((chip) => {
+      chip.onclick = () => {
+        if (aiTopicInput) {
+          aiTopicInput.value = chip.dataset.topic;
+          if (window.QuiznGrowwSound) window.QuiznGrowwSound.click();
+        }
+      };
+    });
+
+    if (aiQuizForm) {
+      aiQuizForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const topic = aiTopicInput?.value?.trim();
+        if (!topic) return;
+
+        const diffEl = document.querySelector('input[name="ai-difficulty"]:checked');
+        const difficulty = diffEl ? diffEl.value : 'medium';
+
+        if (aiSubmitBtn) {
+          aiSubmitBtn.disabled = true;
+          aiSubmitBtn.innerHTML = '<span>⏳ Synthesizing with Gemini AI...</span>';
+        }
+        if (aiStatusMsg) {
+          aiStatusMsg.style.display = 'block';
+          aiStatusMsg.textContent = '✨ Crafting questions, plausible distractors, and explanations...';
+        }
+
+        try {
+          const res = await fetch('/api/questions/ai/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ topic, difficulty, count: 5 }),
+          });
+
+          const data = await res.json();
+          if (!res.ok || !data.success) {
+            throw new Error(data.message || 'Failed to generate quiz');
+          }
+
+          if (data.questions && data.questions.length > 0) {
+            sessionStorage.setItem('ai_quiz_questions', JSON.stringify(data.questions));
+            sessionStorage.setItem('ai_quiz_topic', data.topic);
+          }
+
+          if (window.QuiznGrowwSound) window.QuiznGrowwSound.fanfare();
+          window.location.href = `/quiz?topic=${encodeURIComponent(data.topic)}&difficulty=${encodeURIComponent(data.difficulty)}&ai=true`;
+        } catch (err) {
+          console.error('AI Quiz Generation failed:', err);
+          if (aiStatusMsg) {
+            aiStatusMsg.style.display = 'block';
+            aiStatusMsg.style.color = '#ef4444';
+            aiStatusMsg.textContent = `❌ ${err.message || 'Generation error. Please try another topic.'}`;
+          }
+          if (aiSubmitBtn) {
+            aiSubmitBtn.disabled = false;
+            aiSubmitBtn.innerHTML = '<span>🚀 Generate & Launch Quiz</span>';
+          }
+        }
+      };
+    }
+  }
+
   // Handle difficulty selection click
   document.querySelectorAll('.difficulty-select-card').forEach((card) => {
     card.onclick = () => {

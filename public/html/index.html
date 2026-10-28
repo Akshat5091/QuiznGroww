@@ -93,6 +93,9 @@
             <button id="quick-challenge-btn" class="btn btn-secondary btn-lg">
               <span>🎲 Random Challenge</span>
             </button>
+            <button id="ai-quiz-open-btn" class="btn btn-lg" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%); color: #fff; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);">
+              <span>✨ AI Quiz Generator</span>
+            </button>
           </div>
 
           <div class="hero-trust-badges" style="position: relative; z-index: 1; margin-top: 10px;">
@@ -498,6 +501,60 @@
         <div id="performance-history-list" style="max-height: 400px; overflow-y: auto;">
           <p style="text-align: center; color: var(--text-muted);">Loading your history...</p>
         </div>
+      </div>
+    </div>
+
+    <!-- AI Quiz Generator Modal -->
+    <div id="ai-quiz-modal" class="modal-overlay hidden">
+      <div class="modal-card" style="max-width: 540px; text-align: left;">
+        <button class="modal-close-btn" id="ai-quiz-close-btn">&times;</button>
+        <div style="text-align: center; margin-bottom: 18px;">
+          <div style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(219,39,119,0.2)); border: 1px solid rgba(124,58,237,0.4); margin-bottom: 8px;">
+            <span style="font-size: 24px;">✨</span>
+          </div>
+          <h2 style="font-size: 1.4rem; margin-bottom: 4px;">AI Quiz Generator</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Generate an instant, playable quiz on any topic using Google Gemini AI.</p>
+        </div>
+
+        <form id="ai-quiz-form">
+          <div style="margin-bottom: 14px;">
+            <label for="ai-topic-input" style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Quiz Topic or Subject:</label>
+            <input type="text" id="ai-topic-input" class="form-control" placeholder="e.g. Quantum Computing, React 19, Space Telescopes..." required style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated, #18181b); color: var(--text-primary); font-size: 0.9rem;">
+          </div>
+
+          <!-- Quick Chips -->
+          <div style="margin-bottom: 14px;">
+            <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Quick Suggestions:</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="ai-suggestion-chips">
+              <button type="button" class="btn btn-sm ai-chip" data-topic="Quantum Computing" style="background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: #c084fc; border-radius: 20px; font-size: 0.75rem; padding: 3px 8px;">Quantum Computing</button>
+              <button type="button" class="btn btn-sm ai-chip" data-topic="Machine Learning" style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #34d399; border-radius: 20px; font-size: 0.75rem; padding: 3px 8px;">Machine Learning</button>
+              <button type="button" class="btn btn-sm ai-chip" data-topic="Operating Systems" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); color: #60a5fa; border-radius: 20px; font-size: 0.75rem; padding: 3px 8px;">Operating Systems</button>
+              <button type="button" class="btn btn-sm ai-chip" data-topic="Astrophysics" style="background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); color: #fbbf24; border-radius: 20px; font-size: 0.75rem; padding: 3px 8px;">Astrophysics</button>
+            </div>
+          </div>
+
+          <!-- Difficulty selection -->
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Difficulty Stakes:</label>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+              <label style="cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated, #18181b); font-size: 0.85rem;">
+                <input type="radio" name="ai-difficulty" value="easy"> 🌱 Easy
+              </label>
+              <label style="cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated, #18181b); font-size: 0.85rem;">
+                <input type="radio" name="ai-difficulty" value="medium" checked> ⚡ Medium
+              </label>
+              <label style="cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated, #18181b); font-size: 0.85rem;">
+                <input type="radio" name="ai-difficulty" value="hard"> 🔥 Hard
+              </label>
+            </div>
+          </div>
+
+          <div id="ai-quiz-status-msg" style="display:none; text-align: center; margin-bottom: 12px; font-size: 0.85rem; color: #38bdf8;"></div>
+
+          <button type="submit" id="ai-generate-submit-btn" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%); border: none;">
+            <span>🚀 Generate & Launch Quiz</span>
+          </button>
+        </form>
       </div>
     </div>
   </div>

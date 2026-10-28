@@ -25,11 +25,7 @@ const savePerformance = async (req, res) => {
       timeTakenSeconds: Number(timeTakenSeconds) || 0,
     });
 
-    const updatedStats = await store.updateUserStats(
-      userId,
-      Number(score),
-      Number(totalQuestions)
-    );
+    const updatedStats = await store.updateUserStats(userId, Number(score), Number(totalQuestions));
 
     res.status(201).json({
       success: true,

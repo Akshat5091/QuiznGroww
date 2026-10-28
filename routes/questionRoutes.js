@@ -8,10 +8,14 @@ const {
   submitQuiz,
   addQuestion,
 } = require('../controllers/questionController');
+const { generateAIQuiz } = require('../controllers/aiController');
 const { optionalAuth, protect } = require('../middleware/authMiddleware');
 
 // Public route: list all available topics with question counts
 router.get('/topics', getTopics);
+
+// AI Quiz Generator (Mounted before parameterized routes)
+router.post('/ai/generate', optionalAuth, generateAIQuiz);
 
 // Get quiz questions (fast, accessible to all, optional token captures user identity)
 router.get('/random/challenge/:difficulty', optionalAuth, getRandomQuiz);

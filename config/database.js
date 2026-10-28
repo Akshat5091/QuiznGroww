@@ -19,6 +19,12 @@ const isCloud = !!process.env.TURSO_DATABASE_URL;
 
 const initDB = async () => {
   try {
+    // Enable WAL mode and 5000ms busy timeout for concurrent safety
+    if (!isCloud) {
+      await db.execute('PRAGMA journal_mode = WAL;');
+      await db.execute('PRAGMA busy_timeout = 5000;');
+    }
+
     // 1. Users table
     await db.execute(`
       CREATE TABLE IF NOT EXISTS users (
@@ -81,12 +87,16 @@ const initDB = async () => {
     `);
 
     // Indexes for high concurrency and sub-millisecond querying
-    await db.execute(`CREATE INDEX IF NOT EXISTS idx_perf_user ON quiz_performances(user_id, created_at DESC);`);
+    await db.execute(
+      `CREATE INDEX IF NOT EXISTS idx_perf_user ON quiz_performances(user_id, created_at DESC);`
+    );
     await db.execute(`CREATE INDEX IF NOT EXISTS idx_perf_score ON quiz_performances(score DESC);`);
     await db.execute(`CREATE INDEX IF NOT EXISTS idx_users_streak ON users(current_streak DESC);`);
     await db.execute(`CREATE INDEX IF NOT EXISTS idx_achieve_user ON user_achievements(user_id);`);
 
-    console.log(`✅ LibSQL Database Initialized (${isCloud ? 'Turso Cloud' : 'Embedded SQLite WAL engine'})`);
+    console.log(
+      `✅ LibSQL Database Initialized (${isCloud ? 'Turso Cloud' : 'Embedded SQLite WAL engine'})`
+    );
     return true;
   } catch (error) {
     console.error('❌ Failed to initialize LibSQL database:', error);

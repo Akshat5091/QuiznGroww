@@ -1,15 +1,13 @@
 const jwt = require('jsonwebtoken');
 const store = require('../config/store');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'quizngroww_jwt_secret_token_key_2025_btech_cse_akshat_secure';
+const JWT_SECRET =
+  process.env.JWT_SECRET || 'quizngroww_jwt_secret_token_key_2025_btech_cse_akshat_secure';
 
 const protect = async (req, res, next) => {
   let token = null;
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer ')
-  ) {
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
     token = req.headers.authorization.split(' ')[1];
   }
 
@@ -41,7 +39,7 @@ const protect = async (req, res, next) => {
     };
 
     next();
-  } catch (error) {
+  } catch (_error) {
     return res.status(401).json({
       success: false,
       message: 'Not authorized: Invalid or expired token.',
@@ -52,10 +50,7 @@ const protect = async (req, res, next) => {
 const optionalAuth = async (req, res, next) => {
   let token = null;
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer ')
-  ) {
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
     token = req.headers.authorization.split(' ')[1];
   }
 
@@ -76,7 +71,7 @@ const optionalAuth = async (req, res, next) => {
         stats: user.stats,
       };
     }
-  } catch (e) {
+  } catch (_e) {
     // Ignore invalid optional tokens
   }
 

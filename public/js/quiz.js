@@ -1000,15 +1000,33 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Fetch Questions & Start
   const initQuiz = async () => {
     try {
-      let fetchUrl = `/api/questions/${encodeURIComponent(topicParam)}/${encodeURIComponent(difficultyParam)}?limit=5`;
-      if (topicParam.toLowerCase() === 'random') {
-        fetchUrl = `/api/questions/random/challenge/${encodeURIComponent(difficultyParam)}?limit=5`;
+      // Check for pre-synthesized AI questions in session storage first
+      const cachedAi = sessionStorage.getItem('ai_quiz_questions');
+      const cachedTopic = sessionStorage.getItem('ai_quiz_topic');
+      if (cachedAi && cachedTopic && cachedTopic.toLowerCase() === topicParam.toLowerCase()) {
+        try {
+          const parsed = JSON.parse(cachedAi);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            questions = parsed;
+            sessionStorage.removeItem('ai_quiz_questions');
+            sessionStorage.removeItem('ai_quiz_topic');
+          }
+        } catch (_e) {
+          questions = null;
+        }
       }
 
-      const res = await fetch(fetchUrl);
-      if (!res.ok) throw new Error('Could not load quiz questions.');
+      if (!questions || questions.length === 0) {
+        let fetchUrl = `/api/questions/${encodeURIComponent(topicParam)}/${encodeURIComponent(difficultyParam)}?limit=5`;
+        if (topicParam.toLowerCase() === 'random') {
+          fetchUrl = `/api/questions/random/challenge/${encodeURIComponent(difficultyParam)}?limit=5`;
+        }
 
-      questions = await res.json();
+        const res = await fetch(fetchUrl);
+        if (!res.ok) throw new Error('Could not load quiz questions.');
+
+        questions = await res.json();
+      }
       if (!questions || questions.length === 0) {
         throw new Error('No questions available.');
       }

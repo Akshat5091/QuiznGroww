@@ -28,21 +28,27 @@ const getTopics = async () => {
     topicMap[q.topic] = (topicMap[q.topic] || 0) + 1;
   });
 
-  return Object.keys(topicMap).map((topic) => ({
-    name: topic,
-    count: topicMap[topic],
-  })).sort((a, b) => a.name.localeCompare(b.name));
+  return Object.keys(topicMap)
+    .map((topic) => ({
+      name: topic,
+      count: topicMap[topic],
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 };
 
 const getQuizQuestions = async (topic, difficulty, numQuestions = 5) => {
   let matched = inMemoryQuestions.filter((q) => {
-    const topicMatch = !topic || topic.toLowerCase() === 'random' || q.topic.toLowerCase() === topic.toLowerCase();
+    const topicMatch =
+      !topic || topic.toLowerCase() === 'random' || q.topic.toLowerCase() === topic.toLowerCase();
     const diffMatch = !difficulty || q.difficulty.toLowerCase() === difficulty.toLowerCase();
     return topicMatch && diffMatch;
   });
 
   if (matched.length === 0) {
-    matched = inMemoryQuestions.filter((q) => !topic || topic.toLowerCase() === 'random' || q.topic.toLowerCase() === topic.toLowerCase());
+    matched = inMemoryQuestions.filter(
+      (q) =>
+        !topic || topic.toLowerCase() === 'random' || q.topic.toLowerCase() === topic.toLowerCase()
+    );
   }
 
   // Fisher-Yates array shuffle
@@ -71,7 +77,8 @@ const checkAnswer = async (questionId, userAnswer) => {
     return { found: false };
   }
 
-  const isCorrect = String(question.correctAnswer).trim().toLowerCase() === String(userAnswer).trim().toLowerCase();
+  const isCorrect =
+    String(question.correctAnswer).trim().toLowerCase() === String(userAnswer).trim().toLowerCase();
 
   return {
     found: true,
@@ -88,7 +95,7 @@ const evaluateFullQuiz = async (results, difficulty = 'Medium') => {
   // Normal / Easy: +10 for correct, 0 for incorrect
   // Medium: +10 for correct, -5 for incorrect
   // Hard / Difficult: +10 for correct, -10 for incorrect
-  let correctPts = 10;
+  const correctPts = 10;
   let incorrectPts = 0;
   if (diffNormalized === 'medium') {
     incorrectPts = -5;
@@ -104,7 +111,9 @@ const evaluateFullQuiz = async (results, difficulty = 'Medium') => {
     const question = inMemoryQuestions.find((q) => String(q._id) === String(item.questionId));
 
     if (question) {
-      const isCorrect = String(question.correctAnswer).trim().toLowerCase() === String(item.userAnswer).trim().toLowerCase();
+      const isCorrect =
+        String(question.correctAnswer).trim().toLowerCase() ===
+        String(item.userAnswer).trim().toLowerCase();
       const pointsDelta = isCorrect ? correctPts : incorrectPts;
       if (isCorrect) correctCount++;
       points += pointsDelta;
@@ -266,7 +275,16 @@ const updateUserStats = async (userId, score, totalQuestions) => {
     sql: `UPDATE users
           SET quizzes_taken = ?, total_score = ?, total_questions = ?, accuracy = ?, current_streak = ?, best_streak = ?, updated_at = ?
           WHERE id = ?;`,
-    args: [newQuizzesTaken, newTotalScore, newTotalQuestions, newAccuracy, newCurrentStreak, newBestStreak, now, userId],
+    args: [
+      newQuizzesTaken,
+      newTotalScore,
+      newTotalQuestions,
+      newAccuracy,
+      newCurrentStreak,
+      newBestStreak,
+      now,
+      userId,
+    ],
   });
 
   // Evaluate any newly unlocked badges
@@ -331,7 +349,9 @@ const evaluateAchievements = async (userId, stats) => {
                 VALUES (?, ?, ?, ?, ?, ?);`,
           args: [achieveId, userId, meta.id, meta.name, meta.icon, now],
         });
-      } catch (e) {}
+      } catch (_e) {
+        // Achievement already unlocked or handled
+      }
     }
   }
 };
@@ -357,9 +377,8 @@ const getUserAchievements = async (userId) => {
 const savePerformance = async (perfData) => {
   const id = `perf_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
   const now = new Date().toISOString();
-  const percentage = perfData.totalQuestions > 0
-    ? Math.round((perfData.score / perfData.totalQuestions) * 100)
-    : 0;
+  const percentage =
+    perfData.totalQuestions > 0 ? Math.round((perfData.score / perfData.totalQuestions) * 100) : 0;
 
   await db.execute({
     sql: `INSERT INTO quiz_performances (id, user_id, user_name, topic, difficulty, mode, score, total_questions, percentage, time_taken_seconds, created_at)
@@ -409,10 +428,10 @@ const getPerformanceHistory = async (userId) => {
 };
 
 const getLeaderboard = async (options = {}) => {
-  const limit = typeof options === 'number' ? options : (options.limit || 25);
-  const timeframe = typeof options === 'object' ? (options.timeframe || 'all') : 'all';
-  const topic = typeof options === 'object' ? (options.topic || 'all') : 'all';
-  const difficulty = typeof options === 'object' ? (options.difficulty || 'all') : 'all';
+  const limit = typeof options === 'number' ? options : options.limit || 25;
+  const timeframe = typeof options === 'object' ? options.timeframe || 'all' : 'all';
+  const topic = typeof options === 'object' ? options.topic || 'all' : 'all';
+  const difficulty = typeof options === 'object' ? options.difficulty || 'all' : 'all';
 
   const whereClauses = [];
   const args = [];
@@ -427,7 +446,7 @@ const getLeaderboard = async (options = {}) => {
     if (topic.toLowerCase() === 'random challenge' || topic.toLowerCase() === 'random') {
       whereClauses.push("(LOWER(p.topic) = 'random challenge' OR LOWER(p.topic) = 'random')");
     } else {
-      whereClauses.push("LOWER(p.topic) = LOWER(?)");
+      whereClauses.push('LOWER(p.topic) = LOWER(?)');
       args.push(topic);
     }
   }
@@ -440,7 +459,7 @@ const getLeaderboard = async (options = {}) => {
     } else if (diffLower === 'hard' || diffLower === 'difficult') {
       whereClauses.push("(LOWER(p.difficulty) = 'hard' OR LOWER(p.difficulty) = 'difficult')");
     } else {
-      whereClauses.push("LOWER(p.difficulty) = LOWER(?)");
+      whereClauses.push('LOWER(p.difficulty) = LOWER(?)');
       args.push(difficulty);
     }
   }
@@ -482,13 +501,76 @@ const getLeaderboard = async (options = {}) => {
 
   // Realistic benchmark competitors so the user immediately gets a populated, active leaderboard
   const benchmarkPlayers = [
-    { name: 'Elena Rostova', topic: 'Random Challenge', diff: 'Hard', score: 180, acc: 96, quizzes: 4, time: 21, avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=elena' },
-    { name: 'Marcus Vance', topic: 'Computer Science', diff: 'Hard', score: 160, acc: 92, quizzes: 4, time: 24, avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=marcus' },
-    { name: 'Sophia Chen', topic: 'Science', diff: 'Medium', score: 145, acc: 90, quizzes: 3, time: 27, avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=sophia' },
-    { name: 'Dev Patel', topic: 'Mathematics', diff: 'Medium', score: 120, acc: 88, quizzes: 3, time: 30, avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=dev' },
-    { name: 'Liam O\'Connor', topic: 'Technology', diff: 'Easy', score: 100, acc: 85, quizzes: 2, time: 33, avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=liam' },
-    { name: 'Aria Takahashi', topic: 'Random Challenge', diff: 'Medium', score: 90, acc: 82, quizzes: 2, time: 35, avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=aria' },
-    { name: 'Zane Malik', topic: 'Space & Astronomy', diff: 'Easy', score: 80, acc: 80, quizzes: 2, time: 39, avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=zane' },
+    {
+      name: 'Elena Rostova',
+      topic: 'Random Challenge',
+      diff: 'Hard',
+      score: 180,
+      acc: 96,
+      quizzes: 4,
+      time: 21,
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=elena',
+    },
+    {
+      name: 'Marcus Vance',
+      topic: 'Computer Science',
+      diff: 'Hard',
+      score: 160,
+      acc: 92,
+      quizzes: 4,
+      time: 24,
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=marcus',
+    },
+    {
+      name: 'Sophia Chen',
+      topic: 'Science',
+      diff: 'Medium',
+      score: 145,
+      acc: 90,
+      quizzes: 3,
+      time: 27,
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=sophia',
+    },
+    {
+      name: 'Dev Patel',
+      topic: 'Mathematics',
+      diff: 'Medium',
+      score: 120,
+      acc: 88,
+      quizzes: 3,
+      time: 30,
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=dev',
+    },
+    {
+      name: "Liam O'Connor",
+      topic: 'Technology',
+      diff: 'Easy',
+      score: 100,
+      acc: 85,
+      quizzes: 2,
+      time: 33,
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=liam',
+    },
+    {
+      name: 'Aria Takahashi',
+      topic: 'Random Challenge',
+      diff: 'Medium',
+      score: 90,
+      acc: 82,
+      quizzes: 2,
+      time: 35,
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=aria',
+    },
+    {
+      name: 'Zane Malik',
+      topic: 'Space & Astronomy',
+      diff: 'Easy',
+      score: 80,
+      acc: 80,
+      quizzes: 2,
+      time: 39,
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=zane',
+    },
   ];
 
   let results = rows.map((row) => ({
@@ -507,21 +589,23 @@ const getLeaderboard = async (options = {}) => {
   // Supplement if less than 5 records for the filter combination
   if (results.length < 5) {
     const existingNames = new Set(results.map((r) => r.userName.toLowerCase()));
-    const matchingBenchmarks = benchmarkPlayers.filter((b) => {
-      if (existingNames.has(b.name.toLowerCase())) return false;
-      return true;
-    }).map((b, idx) => ({
-      userId: `bench_${idx}`,
-      userName: b.name,
-      avatar: b.avatar,
-      totalScore: b.score,
-      bestScore: Math.min(b.score, 50),
-      quizzesTaken: b.quizzes,
-      accuracy: b.acc,
-      bestTime: b.time,
-      topic: topic !== 'all' ? topic : b.topic,
-      difficulty: difficulty !== 'all' ? difficulty : b.diff,
-    }));
+    const matchingBenchmarks = benchmarkPlayers
+      .filter((b) => {
+        if (existingNames.has(b.name.toLowerCase())) return false;
+        return true;
+      })
+      .map((b, idx) => ({
+        userId: `bench_${idx}`,
+        userName: b.name,
+        avatar: b.avatar,
+        totalScore: b.score,
+        bestScore: Math.min(b.score, 50),
+        quizzesTaken: b.quizzes,
+        accuracy: b.acc,
+        bestTime: b.time,
+        topic: topic !== 'all' ? topic : b.topic,
+        difficulty: difficulty !== 'all' ? difficulty : b.diff,
+      }));
 
     results = results.concat(matchingBenchmarks.slice(0, 5 - results.length));
   }
@@ -549,6 +633,24 @@ const addQuestion = async (qData) => {
   return newQ;
 };
 
+const addQuestionsBatch = async (questionsArray) => {
+  const added = [];
+  for (const qData of questionsArray) {
+    const newQ = {
+      _id: `q_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      topic: qData.topic,
+      difficulty: qData.difficulty || 'medium',
+      questionText: qData.questionText,
+      options: [...qData.options],
+      correctAnswer: qData.correctAnswer,
+      explanation: qData.explanation || `The correct answer is "${qData.correctAnswer}".`,
+    };
+    inMemoryQuestions.push(newQ);
+    added.push(newQ);
+  }
+  return added;
+};
+
 module.exports = {
   getTopics,
   getQuizQuestions,
@@ -563,4 +665,5 @@ module.exports = {
   getUserAchievements,
   initializeQuestions,
   addQuestion,
+  addQuestionsBatch,
 };

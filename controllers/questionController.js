@@ -108,7 +108,11 @@ const checkAnswer = async (req, res) => {
       correctAnswer: result.correctAnswer,
       explanation: result.explanation,
       pointsDelta,
-      scoringRule: result.correct ? '+10 XP' : (pointsDelta === 0 ? '0 XP (No penalty)' : `${pointsDelta} XP Penalty`),
+      scoringRule: result.correct
+        ? '+10 XP'
+        : pointsDelta === 0
+          ? '0 XP (No penalty)'
+          : `${pointsDelta} XP Penalty`,
     });
   } catch (error) {
     console.error('Error checking answer:', error);
@@ -207,7 +211,9 @@ const addQuestion = async (req, res) => {
 
     res.status(201).json({ success: true, question: saved });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error adding question', error: error.message });
+    res
+      .status(500)
+      .json({ success: false, message: 'Error adding question', error: error.message });
   }
 };
 

@@ -16,7 +16,9 @@ const seedData = async () => {
     console.log('✅ LibSQL Database tables verified and ready.');
     store.initializeQuestions();
     const topics = await store.getTopics();
-    console.log(`⚡ In-memory hot cache initialized with ${questions.length} questions across ${topics.length} subjects.`);
+    console.log(
+      `⚡ In-memory hot cache initialized with ${questions.length} questions across ${topics.length} subjects.`
+    );
     console.log('🚀 Platform is 100% ready for high-concurrency sub-second quizzing.');
   } catch (err) {
     console.error('Seed verification error:', err.message);
