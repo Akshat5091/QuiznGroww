@@ -1,23 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const { addQuestion, getQuizQuestions, checkAnswer, getTopics, getRandomQuiz } = require('../controllers/questionController.js');
-const { requireAuth } = require('@clerk/express');
+const {
+  getTopics,
+  getQuizQuestions,
+  getRandomQuiz,
+  checkAnswer,
+  submitQuiz,
+  addQuestion,
+} = require('../controllers/questionController');
+const { optionalAuth, protect } = require('../middleware/authMiddleware');
 
-// =================================================================
-// PUBLIC ROUTES
-// =================================================================
-router.post('/', addQuestion);
+// Public route: list all available topics with question counts
+router.get('/topics', getTopics);
+
+// Get quiz questions (fast, accessible to all, optional token captures user identity)
+router.get('/random/challenge/:difficulty', optionalAuth, getRandomQuiz);
+router.get('/:topic/:difficulty', optionalAuth, getQuizQuestions);
+
+// Answer checking
 router.post('/check-answer', checkAnswer);
-router.get('/topics', getTopics); 
 
-// =================================================================
-// PROTECTED ROUTES (Require user to be logged in)
-// =================================================================
+// Full quiz submission with instant scorecard and explanation review
+router.post('/submit-quiz', optionalAuth, submitQuiz);
 
-// UPDATED: The route for the random challenge now accepts a difficulty parameter
-router.get('/random/challenge/:difficulty', requireAuth(), getRandomQuiz);
-
-// This route gets questions for a specific topic and difficulty
-router.get('/:topic/:difficulty', requireAuth(), getQuizQuestions);
+// Add new question (protected)
+router.post('/', protect, addQuestion);
 
 module.exports = router;

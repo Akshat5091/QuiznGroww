@@ -506,4 +506,9 @@ const questions = [
 
 
 
-module.exports = questions;
+let additional1 = [];
+try { additional1 = require('./additionalData'); } catch(e) {}
+let additional2 = [];
+try { additional2 = require('./additionalData2'); } catch(e) {}
+
+module.exports = [...questions, ...additional1, ...additional2];

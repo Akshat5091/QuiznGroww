@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const { savePerformance, getPerformanceHistory } = require('../controllers/performanceController');
-const { requireAuth } = require('@clerk/express');
+const {
+  savePerformance,
+  getPerformanceHistory,
+  getLeaderboard,
+} = require('../controllers/performanceController');
+const { protect } = require('../middleware/authMiddleware');
 
-// All routes in this file are protected and require authentication
-router.use(requireAuth());
+// Public route: Global leaderboard
+router.get('/leaderboard', getLeaderboard);
 
-// Route to save a new quiz performance
-router.post('/', savePerformance);
-
-// Route to get the user's performance history
-router.get('/', getPerformanceHistory);
+// Protected routes: Save and view user's quiz performance
+router.post('/', protect, savePerformance);
+router.get('/', protect, getPerformanceHistory);
 
 module.exports = router;

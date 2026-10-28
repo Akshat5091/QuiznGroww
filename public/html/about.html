@@ -1,58 +1,160 @@
- <!DOCTYPE html>
- <html lang="en">
- <head>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Us - QuiznGroww</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
- </head>
- <body class="about-us-page-body">
-  <button id="back-button" class="back-link">
-   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-  </button>
+  <title>About Us & Cognitive Science - QuiznGroww</title>
+  <meta name="description" content="Discover how QuiznGroww leverages the cognitive science of active retrieval practice to sharpen memory retention." />
+  
+  <link rel="stylesheet" href="/css/style.css?v=4.4">
+  
+  <!-- Google Identity Services for 100% Reliable Google Login -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  
+  <script src="/js/theme.js?v=5.0"></script>
+  <script src="/js/sound.js?v=5.0"></script>
+  <script src="/js/auth.js?v=5.0"></script>
+  <script src="/js/main.js?v=5.0" defer></script>
+  <script src="/js/topics.js?v=5.0" defer></script>
+  <script src="/js/about.js?v=5.0" defer></script>
+</head>
 
-  <div class="about-us-container">
-   <header class="about-us-header">
-    <h1>Our Story</h1>
-    <p class="about-us-subtitle">From a Simple Observation to a Mental Gym</p>
-   </header>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/" class="brand-link">
+        <div class="brand-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+        </div>
+        <span>Quizn<span class="brand-gradient-text">Groww</span></span>
+      </a>
 
-   <section class="about-us-section">
-    <h2>The Spark of an Idea</h2>
-    <div class="section-content">
-     <p>
-      The journey of QuiznGroww didn’t begin with a single "eureka" moment, but with a simple observation: the universal appeal of a good challenge. We saw the rise of gamified learning and the enduring popularity of quiz shows, and we asked ourselves a question: What if we could channel that excitement into a tool for genuine self-improvement?
-     </p>
-     <p>
-      We've always been fascinated by the power of self-driven learning. We noticed how quizzing, in particular, does more than just test what you know—it actively improves memory, sharpens critical thinking, and enhances your attention span.
-     </p>
+      <nav>
+        <ul class="nav-links-list">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/topics" class="nav-link">Topics</a></li>
+          <li><a href="/leaderboard" class="nav-link">Leaderboard</a></li>
+          <li><a href="/about" class="nav-link active">About</a></li>
+          <li><a href="/contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-action-btn sound-toggle-btn" title="Toggle Sound">
+          <svg class="sound-icon-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+          <svg class="sound-icon-off" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+        </button>
+        <button class="icon-action-btn theme-toggle-btn" title="Toggle Theme">
+          <svg class="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="theme-icon-moon" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <div id="user-greeting-container"></div>
+        <div id="auth-button-slot"></div>
+      </div>
     </div>
-   </section>
+  </header>
 
-   <section class="about-us-section">
-    <h2>Rooted in Science</h2>
-    <div class="section-content">
-     <p>
-      This isn't just a hunch; it's backed by cognitive science. Quizzes are a powerful form of retrieval practice, a principle where actively recalling information strengthens the neural pathways in your brain. Each time you answer a question, you're not just pulling up a fact; you're reinforcing the connections that lead to long-term retention.
-     </p>
-     <p>
-      Seeing this opportunity, we built QuiznGroww. It’s more than just a platform to test your knowledge. It’s a place where you can engage your mind in a fun, dynamic way, and in doing so, actually improve your brain's performance.
-     </p>
+  <!-- Main App Content Container (Seamless Zero-Blink SPA Mount) -->
+  <div id="page-content" class="page-content-wrapper">
+    <main class="page-container" style="max-width: 900px;">
+    <div class="section-header" style="position: relative;">
+      <!-- Floating Knowledge Glyphs in Background (Subtle & Uncluttered: 📖, 🔍) -->
+      <div class="floating-glyph-cluster" aria-hidden="true" style="opacity: 0.35;">
+        <span class="floating-glyph glyph-2" style="bottom: -20px; left: 8%;" title="Active Study">📖</span>
+        <span class="floating-glyph glyph-3" style="top: 30%; right: 4%;" title="Empirical Research">🔍</span>
+      </div>
+
+      <div class="hero-pill-badge" style="margin-bottom: 12px; position: relative; z-index: 1;">
+        <span>🎓 Cognitive Neuroscience</span>
+      </div>
+      <h1 style="position: relative; z-index: 1;">From Passive Reading to Active Mastery</h1>
+      <p style="position: relative; z-index: 1;">Why testing yourself is up to 300% more effective for long-term retention than re-reading notes.</p>
     </div>
-   </section>
 
-   <section class="about-us-section mission-section">
-    <h2>Our Mission</h2>
-    <p class="mission-statement">
-     To make learning smarter, sharper, and more engaging. We use the power of quizzing to boost memory, spark curiosity, and fuel personal growth. We aim to be a mental gym for learners, where every question challenges the mind and reinforces knowledge in a playful, rewarding way.
-    </p>
-   </section>
+    <div style="display: flex; flex-direction: column; gap: 32px;">
+      <div class="metric-card" style="text-align: left; padding: 32px;">
+        <h2 style="font-size: 1.6rem; margin-bottom: 12px;">The Spark: The Testing Effect</h2>
+        <p style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 16px;">
+          QuiznGroww was founded on a proven psychological phenomenon known as the <strong>Testing Effect</strong> (or <em>retrieval practice</em>). When you simply read a textbook or re-watch a tutorial, your brain creates an illusion of competence. But when you are forced to retrieve an answer from memory under gentle pressure, your brain physically fortifies neural synaptic pathways.
+        </p>
+        <p style="font-size: 1.05rem; line-height: 1.7;">
+          Each quiz on QuiznGroww delivers instant educational feedback explaining <em>why</em> the answer is correct, immediately converting mistakes into permanent learning milestones.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+        <div class="metric-card" style="text-align: left; display: flex; flex-direction: column; gap: 8px;">
+          <div style="width: 52px; height: 52px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+            <img src="/images/3d-blitz.jpg" alt="Instant Blitz" class="img-dark-only" style="width: 100%; height: 100%; object-fit: cover;" />
+            <img src="/images/3d-blitz-light.jpg" alt="Instant Blitz" class="img-light-only" style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
+          <h3 style="margin-bottom: 4px;">Instant Dopamine Feedback</h3>
+          <p style="font-size: 0.9rem;">Real-time explanations, streak multipliers, and synthesized sound effects turn learning into an engaging mental sport.</p>
+        </div>
+
+        <div class="metric-card" style="text-align: left; display: flex; flex-direction: column; gap: 8px;">
+          <div style="width: 52px; height: 52px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+            <img src="/images/brain-icon.jpg" alt="Active Recall" class="img-dark-only" style="width: 100%; height: 100%; object-fit: cover;" />
+            <img src="/images/brain-icon-light.jpg" alt="Active Recall" class="img-light-only" style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
+          <h3 style="margin-bottom: 4px;">18 Comprehensive Domains</h3>
+          <p style="font-size: 0.9rem;">From Computer Science data structures and Space astronomy to World Affairs and Finance, explore curated questions across all skill levels.</p>
+        </div>
+
+        <div class="metric-card" style="text-align: left; display: flex; flex-direction: column; gap: 8px;">
+          <div style="width: 52px; height: 52px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+            <img src="/images/3d-trophy.jpg" alt="Leaderboard" class="img-dark-only" style="width: 100%; height: 100%; object-fit: cover;" />
+            <img src="/images/3d-trophy-light.jpg" alt="Leaderboard" class="img-light-only" style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
+          <h3 style="margin-bottom: 4px;">Sub-Millisecond Engine</h3>
+          <p style="font-size: 0.9rem;">Built with zero bloated third-party trackers, native JWT authentication, and in-memory indexing for instantaneous gameplay.</p>
+        </div>
+      </div>
+
+      <div class="metric-card" style="text-align: center; padding: 40px 24px; background: var(--accent-light); border-color: var(--border-glow);">
+        <h2 style="margin-bottom: 12px;">Ready to train your memory?</h2>
+        <p style="margin-bottom: 24px;">Jump into a quiz right now and feel the difference of active retrieval.</p>
+        <a href="/topics" class="btn btn-primary btn-lg">Explore Topics Now</a>
+      </div>
+    </div>
+  </main>
   </div>
 
-  <script src="/js/about.js"></script>
- </body>
- </html>
- 
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <img src="/images/footer-logo-dark.png" alt="QuiznGroww" class="footer-logo-dark" />
+        <img src="/images/footer-logo.png" alt="QuiznGroww" class="footer-logo-light" />
+        <p>A high-performance, studio-grade quizzing and brain-training platform designed to help learners and developers master concepts through science-backed active recall.</p>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Navigation</h4>
+        <div class="footer-links-col">
+          <a href="/">Home</a>
+          <a href="/topics">All Topics</a>
+          <a href="/leaderboard">Leaderboard</a>
+          <a href="/about">About & Science</a>
+          <a href="/contact">Contact Us</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Connect</h4>
+        <div class="footer-links-col">
+          <a href="https://github.com/Akshat5091" target="_blank" rel="noopener">GitHub</a>
+          <a href="/feedback">Product Feedback</a>
+          <a href="/contact">Support</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <span>© 2025 QuiznGroww. Engineered with modern web standards.</span>
+      <span>Designed by Akshat Nagori • Sem 7 B.Tech CSE</span>
+    </div>
+  </footer>
+</body>
+</html>

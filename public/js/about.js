@@ -1,16 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const backButton = document.getElementById('back-button');
+/**
+ * QuiznGroww About Page Script
+ */
+window.initAboutPage = function initAboutPage() {
+  const backBtn = document.getElementById('back-button');
+  if (backBtn) {
+    backBtn.onclick = (e) => {
+      e.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+      } else if (window.QuiznGrowwNav) {
+        window.QuiznGrowwNav.navigate('/');
+      } else {
+        window.location.href = '/';
+      }
+    };
+  }
+};
 
-    if (backButton) {
-        backButton.addEventListener('click', () => {
-            // Check if the previous page was on the same site
-            if (document.referrer && document.referrer.startsWith(window.location.origin)) {
-                // If so, go back to the previous page in history
-                window.history.back();
-            } else {
-                // Otherwise, go to the homepage as a fallback
-                window.location.href = '/';
-            }
-        });
-    }
-});
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', window.initAboutPage);
+} else {
+  window.initAboutPage();
+}

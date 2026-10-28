@@ -1,63 +1,208 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Get Started - QuiznGroww</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In with Google - QuiznGroww</title>
+  <link rel="stylesheet" href="/css/style.css?v=4.4">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="/js/theme.js?v=4.0"></script>
+  <script src="/js/sound.js?v=4.0"></script>
+  <script src="/js/auth.js?v=4.4"></script>
 </head>
-<body class="signup-page-body">
-    <div id="notification-popup" class="notification-popup hidden">
-        <div class="notification-content">
-            <h2>Hurray! You're Subscribed!</h2>
-            <p>Get ready for exciting new quizzes and features delivered right to your inbox.</p>
-        </div>
-    </div>
 
-    <a href="/html/feedback.html" class="back-link">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px;">
+  <div class="modal-card auth-card-v2" style="transform: none; max-width: 460px; text-align: center; margin: auto;">
+    <a href="/" class="brand-link" style="justify-content: center; margin-bottom: 24px;">
+      <div class="brand-icon-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      </div>
+      <span>Quizn<span class="brand-gradient-text">Groww</span></span>
     </a>
-    <div class="signup-page-container">
-        <div class="signup-image-content">
-            <img src="/images/signup-graphic.png" alt="Knowledge graphic" class="signup-graphic">
-        </div>
-        <div class="signup-text-content">
-            <h1>Start Quizzing and Boost Your Knowledge Instantly!</h1>
-            <p>Ready to challenge yourself? Click below to head to the topics page and start your learning journey.</p>
-            <a href="/html/topics.html" class="get-started-btn">Let's Go!</a>
-        </div>
-    </div>
-    <footer class="main-footer-section">
-        <div class="footer-content">
-            <div class="footer-left">
-                <span>© 2025 QuiznGroww.</span>
-                <img src="/images/footer-logo.png" alt="QuiznGroww Logo" class="footer-logo">
-            </div>
-            <nav class="footer-nav">
-                <a href="/">Home</a>
-                <a href="/html/about.html">About</a>
-                <a href="/html/contact.html">Contact Us</a>
-                <a href="#">Terms & Conditions</a>
-            </nav>
-            <div class="footer-right">
-                <form id="subscribe-form" class="subscribe-box">
-                    <p>Subscribe for updates on new quizzes and features!</p>
-                    <input type="email" id="subscribe-email" placeholder="Email Address..." required>
-                    <button type="submit">SUBMIT</button>
-                </form>
-                <div class="social-icons">
-                    <a href="#"><svg width="24" height="24" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
-                    <a href="#"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-                    <a href="#"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg></a>
-                </div>
-            </div>
-        </div>
-    </footer>
 
-    
-    <script src="/js/footer.js"></script>
+    <div class="auth-brand-badge" style="margin-bottom: 16px;">
+      <svg class="google-logo-svg" width="44" height="44" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>
+    </div>
+
+    <h1 style="font-size: 1.85rem; margin-bottom: 8px;">Sign In with Google</h1>
+    <p style="font-size: 0.95rem; margin-bottom: 24px; color: var(--text-muted);">
+      Access 720+ curated questions, live performance tracking, lifelines, and global rankings.
+    </p>
+
+    <div id="signup-alert" class="auth-alert hidden"></div>
+
+    <!-- Official Google Identity Button Slot -->
+    <div id="g_id_signin_page" class="g-signin-container hidden" style="margin-bottom: 16px; display: flex; justify-content: center;">
+      <div id="g_id_signin_signup_page"></div>
+    </div>
+
+    <!-- Sandbox Mode Banner (Active when GOOGLE_CLIENT_ID is empty) -->
+    <div id="page-sandbox-slot" class="sandbox-mode-banner" style="margin-bottom: 16px;">
+      <div class="sandbox-pill">
+        <span class="sandbox-dot"></span>
+        <span>OAuth Sandbox Mode</span>
+      </div>
+      <p class="sandbox-text">
+        Real browser Google popup requires <code>GOOGLE_CLIENT_ID</code> in <code>.env</code>. You can sign in immediately with a test profile below:
+      </p>
+    </div>
+
+    <!-- Sandbox Name & Email Inputs -->
+    <div id="page-sandbox-inputs" class="sandbox-inputs-grid" style="margin-bottom: 14px;">
+      <input type="text" id="page-name-input" placeholder="Your Name (e.g. Akshat)" class="sandbox-input" />
+      <input type="email" id="page-email-input" placeholder="Your Email (optional)" class="sandbox-input" />
+    </div>
+
+    <!-- 100% Reliable Instant Google Login Fallback Button -->
+    <div class="google-direct-action" style="margin-bottom: 20px;">
+      <button id="page-google-instant-btn" class="google-auth-btn-direct" type="button" style="width: 100%;">
+        <svg width="22" height="22" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        <span id="page-google-btn-text">Enter QuiznGroww (Sandbox Profile) &rarr;</span>
+      </button>
+    </div>
+
+    <!-- Demo Trial status / Start Demo -->
+    <div style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 14px; margin-bottom: 20px; font-size: 0.9rem;">
+      <div style="font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <span>🧪 Want to test first?</span>
+      </div>
+      <p style="margin: 0 0 10px 0; color: var(--text-muted); font-size: 0.85rem;">You get up to 2 full free demo quizzes without any sign-in.</p>
+      <a href="/html/topics.html" class="btn btn-secondary btn-sm" style="display: inline-block;">
+        Try 2 Free Demo Quizzes &rarr;
+      </a>
+    </div>
+
+    <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-top: 12px;">
+      Zero passwords to remember. One-click authentication powered by official Google Identity Services.
+    </p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // If already logged in, redirect straight to topics
+      if (window.QuiznGrowwAuth && window.QuiznGrowwAuth.isLoggedIn()) {
+        window.location.replace('/html/topics.html');
+        return;
+      }
+
+      const instantBtn = document.getElementById('page-google-instant-btn');
+      const alertBox = document.getElementById('signup-alert');
+      const gContainer = document.getElementById('g_id_signin_page');
+      const gBtnSlot = document.getElementById('g_id_signin_signup_page');
+      const sandboxSlot = document.getElementById('page-sandbox-slot');
+      const sandboxInputs = document.getElementById('page-sandbox-inputs');
+      const btnText = document.getElementById('page-google-btn-text');
+
+      // Fetch config to check if Google Client ID is configured
+      let googleClientId = '';
+      try {
+        const res = await fetch('/api/auth/config');
+        if (res.ok) {
+          const cfg = await res.json();
+          googleClientId = cfg.googleClientId || '';
+        }
+      } catch (e) {}
+
+      if (googleClientId) {
+        if (gContainer) gContainer.classList.remove('hidden');
+        if (sandboxSlot) sandboxSlot.classList.add('hidden');
+        if (sandboxInputs) sandboxInputs.classList.add('hidden');
+        if (btnText) btnText.textContent = 'Skip with Guest Demo Profile';
+
+        const runGsi = () => {
+          if (!window.google?.accounts?.id || !gBtnSlot) return;
+          try {
+            window.google.accounts.id.initialize({
+              client_id: googleClientId,
+              callback: async (response) => {
+                try {
+                  await window.QuiznGrowwAuth.loginWithGoogle(response.credential);
+                  if (window.QuiznGrowwSound) window.QuiznGrowwSound.fanfare();
+                  window.location.replace('/html/topics.html');
+                } catch (err) {
+                  if (alertBox) {
+                    alertBox.textContent = err.message;
+                    alertBox.className = 'auth-alert error';
+                  }
+                }
+              },
+              auto_select: false,
+            });
+
+            window.google.accounts.id.renderButton(gBtnSlot, {
+              theme: document.documentElement.getAttribute('data-theme') === 'light' ? 'outline' : 'filled_black',
+              size: 'large',
+              shape: 'pill',
+              text: 'continue_with',
+              width: 280,
+            });
+
+            window.google.accounts.id.prompt();
+          } catch (e) {
+            console.warn('GSI error:', e);
+          }
+        };
+
+        if (window.google?.accounts?.id) {
+          runGsi();
+        } else {
+          let attempts = 0;
+          const poll = setInterval(() => {
+            attempts++;
+            if (window.google?.accounts?.id) {
+              clearInterval(poll);
+              runGsi();
+            } else if (attempts > 30) {
+              clearInterval(poll);
+            }
+          }, 100);
+        }
+      }
+
+      instantBtn?.addEventListener('click', async () => {
+        const nameVal = document.getElementById('page-name-input')?.value.trim() || null;
+        const emailVal = document.getElementById('page-email-input')?.value.trim() || null;
+
+        try {
+          instantBtn.disabled = true;
+          instantBtn.innerHTML = '<span>Signing in...</span>';
+          if (alertBox) alertBox.className = 'auth-alert hidden';
+
+          await window.QuiznGrowwAuth.quickGoogleSignIn(emailVal, nameVal);
+          if (window.QuiznGrowwSound) window.QuiznGrowwSound.fanfare();
+          window.location.replace('/html/topics.html');
+        } catch (err) {
+          if (window.QuiznGrowwSound) window.QuiznGrowwSound.wrong();
+          if (alertBox) {
+            alertBox.textContent = err.message || 'Google sign-in failed.';
+            alertBox.className = 'auth-alert error';
+          }
+        } finally {
+          if (instantBtn) {
+            instantBtn.disabled = false;
+            instantBtn.innerHTML = `
+              <svg width="22" height="22" viewBox="0 0 48 48">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+              </svg>
+              <span>${googleClientId ? 'Skip with Guest Demo Profile' : 'Enter QuiznGroww (Sandbox Profile) &rarr;'}</span>
+            `;
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>
