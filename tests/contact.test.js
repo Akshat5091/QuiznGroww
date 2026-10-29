@@ -40,3 +40,4 @@ test('POST /api/contact - successfully accepts valid, sanitized contact inquiry'
   assert.equal(response.body.success, true);
   assert.match(response.body.message, /message has been received/i);
 });
+
